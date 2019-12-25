@@ -4,6 +4,12 @@
 
 The U-LeNet dataset was created by the Kyiv School of Economics (KSE) research team with the support of the Office of Naval Research (ONR) N00014-17-1-2675 funding.
 
+Current repository includes scripts used for preparing the data and code for some of the projects made using the U-LeNet data:
+
+- Directory **Cleaning data** - code for wrangling and merging raw files with data
+
+- Directory **BI_Sankey** - code for creating a shiny application for vizualizing the migration patterns of MPs between Palriaments of different years
+
 ## Content
 
 ### The data include the following sets:
