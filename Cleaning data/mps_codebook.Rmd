@@ -1,0 +1,459 @@
+---
+title: "U-LeNet. MPs characteristics"
+subtitle: "Codebook version 1.0"
+author: 'Oleksa Stepaniuk'
+date: "`r Sys.setlocale('LC_TIME', 'C'); format(Sys.time(), '%d %B, %Y')`"
+output:
+  word_document
+header-includes:
+  \usepackage[ukrainian]{babel}
+  \renewcommand\rmdefault{cmr} 
+  \renewcommand\sfdefault{cmss}
+  \renewcommand{\contentsname}{fffff}
+toc: true
+
+
+---
+
+<!-- markdown's bold and italic stop working after including babel package -->
+<!-- https://tex.stackexchange.com/questions/246830/markdowns-bold-and-italic-stop-working-after-including-babel-package -->
+
+
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(stringr) #to manipulate strings
+
+library(knitr) #to use function kable - for printing tables
+library(captioner) #to create table headers
+library(naniar) #for function replace_with_na_all
+library(kableExtra)
+
+Sys.setlocale("LC_TIME", "C")
+
+directory_working <- "C:/Users/Oleksa/Documents/Projects/Rada_networks"
+directory_data <- "./data_8"
+directory_mps <- "./MPS"
+
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = directory_working)
+
+df <- readRDS(file = "./mps_combined.rds")
+```
+
+\newpage
+
+File mps_combined includes characteristics of each MP for the last seven convocations of the Ukrainian Parliament including the current one (1998-2019). Avalilable information depends on the specific convocation. Overall the database includes `r nrow(df)` observations and `r ncol(df)` variables that describe `r length(unique(df$ID_new))` unique MPs and two institutions - President and Government. Database is provided in the csv and rds formats. The rds variant of database allready has all the varibles in the appropriate format.
+
+# Description of variables {-}
+
+## ID_new {-}
+
+Meaning: unique id of the person. All MPs have the same ID_new across all convocations.
+
+Format: `r class (df$ID_new)`
+
+Number of unique values: `r length(unique(df$ID_new))`
+
+Range: `r min(df$ID_new, na.rm=TRUE)` - `r max(df$ID_new, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$ID_new))`
+
+## ID_old {-}
+
+Meaning: MPs id for a particular convocation. The same person can have different ID_old in different convocations.
+
+Format: `r class (df$ID_old)`
+
+Number of unique values: `r length(unique(df$ID_old))`
+
+Range: `r min(df$ID_old, na.rm=TRUE)` - `r max(df$ID_old, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$ID_old))`
+
+## name_ukr {-}
+
+Meaning: Ukrainian transliteration of MP name. Consists of surname, name and patronymic. Unique identifier of the MP.
+
+Format: `r class (df$name_ukr)`
+
+Number of unique values: `r length(unique(df$name_ukr))`
+
+Example: `r df$name_ukr[1]`
+
+Number of missing values: `r sum(is.na(df$name_ukr))`
+
+\newpage
+
+## name_eng {-}
+
+Meaning: English transliteration of MP name. Consists of surname, name and patronymic. Unique identifier of the MP.
+
+Format: `r class (df$name_eng)`
+
+Number of unique values: `r length(unique(df$name_eng))`
+
+Example: `r df$name_eng[1]`
+
+Number of missing values: `r sum(is.na(df$name_eng))`
+
+## gender {-}
+
+Meaning: MPs gender.
+
+Format: `r class(df$gender)`
+
+Number of levels: `r length(levels(df$gender))`
+
+Levels: `r levels(df$gender)`
+
+Number of missing values: `r sum(is.na(df$gender))`
+
+## party {-}
+
+Meaning: party name if MP belonged to a party.
+
+Format: `r class(df$party)`
+
+Number of levels: `r length(levels(df$party))`
+
+Levels: `r levels(df$party)`
+
+Number of missing values: `r sum(is.na(df$party))`
+
+## faction {-}
+
+Meaning: faction/MPs group name if MP belonged to a faction/MPs group.
+
+Format: `r class(df$faction)`
+
+Number of levels: `r length(levels(df$faction))`
+
+Levels: `r levels(df$faction)`
+
+Number of missing values: `r sum(is.na(df$faction))`
+
+Note: if MP left Parliament or joined the Parliament management (Parliament Chairman, First Deputy and Deputy chairmans) database includes information on his affiliation before leaving/joining Parliament management.
+
+## convocation {-}
+
+Meaning: the convocation number.
+
+Format: `r class (df$convocation)`
+
+Number of unique values: `r length(unique(df$convocation))`
+
+Range: `r min(df$convocation, na.rm=TRUE)` - `r max(df$convocation, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$convocation))`
+
+## date_oath {-}
+
+Meaning: the date of the oath.
+
+Format: `r class (df$date_oath)`
+
+Range: `r min(df$date_oath, na.rm=TRUE)` - `r max(df$date_oath, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$date_oath))`
+
+## date_resignation {-}
+
+Meaning: the date of the resignation from parliament.
+
+Format: `r class (df$date_resignation)`
+
+Range: `r min(df$date_resignation, na.rm=TRUE)` - `r max(df$date_resignation, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$date_resignation))`
+
+## elected {-}
+
+Meaning: mechanism through which MP was elected.
+
+Format: `r class (df$elected)`
+
+Number of levels: `r length(levels(df$elected))`
+
+Levels: `r levels(df$elected)`
+
+Number of missing values: `r sum(is.na(df$elected))`
+
+## age {-}
+
+Meaning: MPs age in years.
+
+Format: `r class (df$age)`
+
+Range: `r min(df$age, na.rm=TRUE)` - `r max(df$age, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$age))`
+
+Note: data availbale only for convocations 3,4,5,6,7,8
+
+## education {-}
+
+Meaning: MPs education level.
+
+Format: `r class (df$education)`
+
+Number of levels: `r length(levels(df$education))`
+
+Levels: `r levels(df$education)`
+
+Number of missing values: `r sum(is.na(df$education))`
+
+Note: data availbale only for convocations 3,4,5,6,7,8
+
+## specialization {-}
+
+Meaning: MPs job before joining the Parliament.
+
+Format: `r class (df$specialization)`
+
+Number of levels: `r length(levels(df$specialization))`
+
+Levels: `r levels(df$specialization)`
+
+Number of missing values: `r sum(is.na(df$specialization))`
+
+Note: data availbale only for convocations 3,4,6,7,8
+
+## committee {-}
+
+Meaning: name of the committee if MP was its member.
+
+Format: `r class (df$committee)`
+
+Number of levels: `r length(levels(df$committee))`
+
+Levels (first 15): `r levels(df$committee)[1:15]`
+
+Number of missing values: `r sum(is.na(df$committee))`
+
+## faction_position {-}
+
+Meaning: position in a faction/MPs group.
+
+Format: `r class (df$faction_position)`
+
+Number of levels: `r length(levels(df$faction_position))`
+
+Levels: `r levels(df$faction_position)`
+
+Number of missing values: `r sum(is.na(df$faction_position))`
+
+Note:
+
+- Missing value means that MP was not a member of faction/MPs group
+
+- Convocation 9: includes information about being a member of faction/MPs group; being a chairman, co-chairman or deputy chairman; being a member of parliament management
+
+- Convocation 4-8: the same as convocation 9, except no information on being a deputy chairman
+
+- Convocation 3: only information about being a member of parliament management
+
+
+## to_exec_judicial {-}
+
+Meaning: equals Yes if a person stopped being an MP to join Government or other state service position.
+
+Format: `r class (df$to_exec_judicial)`
+
+Number of levels: `r length(levels(df$to_exec_judicial))`
+
+Levels: `r levels(df$to_exec_judicial)`
+
+Number of missing values: `r sum(is.na(df$to_exec_judicial))`
+
+Note: data availbale only for convocations 5,6,7,8,9
+
+## birthday {-}
+
+Meaning: MPs birthday.
+
+Format: `r class (df$birthday)`
+
+Range: `r min(df$birthday, na.rm=TRUE)` - `r max(df$birthday, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$birthday))`
+
+Note: data availbale only for convocations 8,9
+
+## assistants {-}
+
+Meaning: total number of MPs assistants.
+
+Format: `r class (df$assistants)`
+
+Range: `r min(df$assistants, na.rm=TRUE)` - `r max(df$assistants, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$assistants))`
+
+Note: data availbale only for convocations 8,9
+
+## facebook {-}
+
+Meaning: facebook address.
+
+Format: `r class (df$facebook)`
+
+Note: data availbale only for convocations 8
+
+## twitter {-}
+
+Meaning: twitter address.
+
+Format: `r class (df$twitter)`
+
+Note: data availbale only for convocations 8
+
+## ID_9 {-}
+
+Meaning: MPs id in the dataset for the convocation 9.
+
+Format: `r class (df$ID_9)`
+
+Number of unique values: `r length(unique(df$ID_9))`
+
+Range: `r min(df$ID_9, na.rm=TRUE)` - 21328
+
+Number of missing values: `r sum(is.na(df$ID_9))`
+
+Note: data availbale only for convocations 9
+
+## committee_position {-}
+
+Meaning: position in the Parliamentary Committee.
+
+Format: `r class (df$committee_position)`
+
+Number of levels: `r length(levels(df$committee_position))`
+
+Levels: `r levels(df$committee_position)`
+
+Number of missing values: `r sum(is.na(df$committee_position))`
+
+Note: data availbale only for convocations 9
+
+## int_organization {-}
+
+Meaning: participation in international ties.
+
+Format: `r class (df$int_organization)`
+
+Number of levels: `r length(levels(df$int_organization))`
+
+Levels: `r levels(df$int_organization)`
+
+Number of missing values: `r sum(is.na(df$int_organization))`
+
+Note:
+
+- data availbale only for convocations 9
+
+- even if MP participated in several organizations, only the first organization is included in the database
+
+## int_post {-}
+
+Meaning: role in international ties.
+
+Format: `r class (df$int_post)`
+
+Number of levels: `r length(levels(df$int_post))`
+
+Levels: `r levels(df$int_post)`
+
+Number of missing values: `r sum(is.na(df$int_post))`
+
+Note: data availbale only for convocations 9
+
+## num_in_party {-}
+
+Meaning: number in party list if MP is party-list elected.
+
+Format: `r class (df$num_in_party)`
+
+Range: `r min(df$num_in_party, na.rm=TRUE)` - `r max(df$num_in_party, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$num_in_party))`
+
+Note: data availbale only for convocations 9
+
+## district_num {-}
+
+Meaning: the district id if MP was selected via constituency.
+
+Format: `r class (df$district_num)`
+
+Range: `r min(df$district_num, na.rm=TRUE)` - `r max(df$district_num, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$district_num))`
+
+Note:
+
+- data availbale only for convocations 9
+
+- variable is relevant only for MPs selected via constituency. MPs selected with party system will have a missing value
+
+## region_id {-}
+
+Meaning: name of the constituency region.
+
+Format: `r class (df$region_id)`
+
+Number of levels: `r length(levels(df$region_id))`
+
+Levels: `r levels(df$region_id)`
+
+Number of missing values: `r sum(is.na(df$region_id))`
+
+Note:
+
+- data availbale only for convocations 9
+
+- variable is relevant only for MPs selected via constituency. MPs selected with party system will have a missing value
+
+## resignation_reason {-}
+
+Meaning: resignation reason.
+
+Format: `r class (df$resignation_reason)`
+
+Number of unique values: `r length(unique(df$resignation_reason))`
+
+Example: "НДУ Особиста письмова заява про складення повноважень"
+
+Number of missing values: `r sum(is.na(df$resignation_reason))`
+
+Note: data availbale only for convocations 9
+
+## plenary_attented {-}
+
+Meaning: number of plenary sessions attended.
+
+Format: `r class (df$plenary_attented)`
+
+Range: `r min(df$plenary_attented, na.rm=TRUE)` - `r max(df$plenary_attented, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$plenary_attented))`
+
+Note: data available only for the convocation 9
+
+## plenary_missed {-}
+
+Meaning: number of missed plenary sessions.
+
+Format: `r class (df$plenary_missed)`
+
+Range: `r min(df$plenary_missed, na.rm=TRUE)` - `r max(df$plenary_missed, na.rm=TRUE)`
+
+Number of missing values: `r sum(is.na(df$plenary_missed))`
+
+Note: data available only for the convocation 9
+
+
+
+
+
