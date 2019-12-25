@@ -18,7 +18,7 @@ Kaggle page](https://www.kaggle.com/dataset/9b5e80df136eddb01b7e860c448436cfc569
 
 4. Open either **ui.R** or **server.R** with RStudio and run the application
 
-### To recreate data files used in the application (file in the **mps_data_for_shiny_Sankey_BI.zip** archive):
+### To recreate data files used in the application (files in the **mps_data_for_shiny_Sankey_BI.zip** archive):
 
 - Apply code from the **sankey_preparing_data.R** to the merged database of MPs attributes - file **mps_combined.csv** from the [
 Kaggle page](https://www.kaggle.com/dataset/9b5e80df136eddb01b7e860c448436cfc569a8a92409f9b74fad560bbe41d1e6) of the project.
