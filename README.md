@@ -6,7 +6,7 @@ The U-LeNet dataset was created by the Kyiv School of Economics (KSE) research t
 
 ## Content
 
-The data include the following sets:
+### The data include the following sets:
 
 1.	Roll call voting 2002-2019
 
@@ -16,11 +16,13 @@ The data include the following sets:
 
 4.	Attributes of Members of parliament (MPs) 1998-2019
 
-5.	Ukrainian Parliament BI tool- migration of MPs between Parliaments and Factions ([link to shiny application](https://ostepaniuk.shinyapps.io/rada_networks/))
+### Additional materials
 
-6.	Selected models and analyses (R scripts) - see our [Github repository](https://github.com/oleksastepaniuk/ua_parliament_networks)
+1.	Ukrainian Parliament BI tool- migration of MPs between Parliaments and Factions ([link to shiny application](https://ostepaniuk.shinyapps.io/rada_networks/))
 
-Work in progress (soon to be added):
+2.	Selected models and analyses (R scripts) - see our [Github repository](https://github.com/oleksastepaniuk/ua_parliament_networks)
+
+### Work in progress (soon to be added):
 
 1.	Declarations of MPs – wealth and ties to industries
 
