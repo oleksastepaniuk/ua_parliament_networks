@@ -6,3 +6,14 @@ Tool allows to create and save a Sankey diagram relevant to a specific research 
 
 BI is published [
 online](https://ostepaniuk.shinyapps.io/rada_networks/).
+
+To recreate the application:
+
+1. Download the subdirectory **BI_Sankey_code**
+
+2. Create a folder **www** inside the **BI_Sankey_code**
+
+3. Download the archive **mps_data_for_shiny_Sankey_BI.zip** from the [
+Kaggle page](https://www.kaggle.com/dataset/9b5e80df136eddb01b7e860c448436cfc569a8a92409f9b74fad560bbe41d1e6) of the project. Unpack all the data files to **./BI_Sankey_code/www**
+
+4. Open either **ui.R** or **server.R** with RStudio and run the application
