@@ -23,7 +23,7 @@ Current repository includes scripts used for preparing the data and code for som
 4.	Attributes of Members of parliament (MPs) 1998-2019
 
 Data can be downloaded from the [
-Kaggle page](https://www.kaggle.com/dataset/9b5e80df136eddb01b7e860c448436cfc569a8a92409f9b74fad560bbe41d1e6) of the project. Currently the the database of MPs attributes is available.
+Kaggle page](https://www.kaggle.com/dataset/9b5e80df136eddb01b7e860c448436cfc569a8a92409f9b74fad560bbe41d1e6) of the project. Currently the database of MPs attributes is available.
 
 ### Additional materials
 
