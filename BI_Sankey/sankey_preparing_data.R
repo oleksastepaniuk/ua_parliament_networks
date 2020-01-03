@@ -6,9 +6,6 @@ library(networkD3)
 library(dplyr)
 library(tidyr)
 
-directory_working <- "C:/Users/Oleksa/Documents/Projects/Rada_networks"
-setwd(directory_working)
-
 ############## A database with the MPs info ##############
 
 df_mp <- read.csv('./mps_combined.csv', sep=",", header=TRUE)
@@ -25,7 +22,7 @@ rm(column)
 # filter values
 df_mp <- df_mp[df_mp$faction!='Institution',]
 
-saveRDS(df_mp, file = "df_database.rds")
+# saveRDS(df_mp, file = "df_database.rds")
 
 write.csv(df_mp, file='df_database.csv', row.names = FALSE)
 
@@ -45,9 +42,9 @@ df_total$target_new <- df_total[,'faction']
 ############## Add 'zero' Rada with all unique names ##############
 
 df_zero <- data.frame('name_eng'=unique(df_total$name_eng),
-                      'rada_number'=0)
-df_zero[,'faction'] <- 'people_pool'
-df_zero$target_new <- 'people_pool'
+                      'rada_number'='')
+df_zero[,'faction'] <- 'new_MPs'
+df_zero$target_new <- 'new_MPs'
 
 df_total <- rbind(df_total, df_zero)
 
