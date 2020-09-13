@@ -2,7 +2,7 @@
 *.rds
 *.xlsx
 *.html
-./Data/*
+/Data/*
 .ipynb_checkpoints
 */__pycache__/*
 
