@@ -2,3 +2,5 @@
 *.rds
 *.xlsx
 *.html
+./Data/*
+*.ipynb
